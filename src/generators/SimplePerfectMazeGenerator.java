@@ -30,37 +30,22 @@ public class SimplePerfectMazeGenerator implements MazeGenerator {
 
         // First line, with the entry of the labyrinth
         mazeBoolean[0][1] = true;
+        mazeBoolean[1][1] = true;
     }
 
 
     @Override
-    public boolean[][] generate(int x, int y) {
+    public boolean[][] generateCenterMaze(int x, int y) {
         int nextX = 0;
         int nextY = 0;
-        int count = 0;
         int totalCells = (lines/3) * (columns/3);
         int nextDirection;
 
         ArrayList<String> unvisitedCellsNeighbour = new ArrayList<>();
         Pair<Integer, Integer> coordinates = new Pair<>(x, y);
 
-        // If all cases are completed :
-        for (int i=1; i<lines; i+=3) {
-            for (int j=1; j<columns; j+=3) {
-                if (mazeBoolean[i][j]) {
-                    count += 1;
-                }
-            }
-        }
-        System.out.println("Count : " + count);
-        System.out.println("Actual coordinates : " + x + ", " + y);
-
-        for (Pair<Integer, Integer> pair : visitedCells) {
-            System.out.print( "("+ pair.getFirst() + ", " + pair.getSecond() + ") ,");
-        }
-
-
-        if (count == totalCells) {
+        if (visitedCells.size() == totalCells) {
+            // If all the center of the cells are visited, the maze are entirely generated
             return mazeBoolean;
         } else {
             // Generate the maze
@@ -86,7 +71,7 @@ public class SimplePerfectMazeGenerator implements MazeGenerator {
                     visitedCells.add(coordinates);
                     visitedIntersection.add(coordinates);
                 }
-                generate(nextX, nextY);
+                generateCenterMaze(nextX, nextY);
             } else {
                 nextDirection = (int)(Math.random() * unvisitedCellsNeighbour.size());
 
@@ -119,17 +104,39 @@ public class SimplePerfectMazeGenerator implements MazeGenerator {
                     visitedCells.add(coordinates);
                     visitedIntersection.add(coordinates);
                 }
-                generate(nextX, nextY);
+                generateCenterMaze(nextX, nextY);
             }
         }
         return mazeBoolean;
     }
 
     @Override
+    public void lastLineMaze(boolean[][] maze) {
+        int exit;
+        ArrayList<Integer> possibleExit = new ArrayList<>();
+
+        if (maze[columns-2][lines-2]) {
+            exit = columns-2;
+        } else {
+            for (int i=1; i<columns; i+=3) {
+                System.out.println(maze[i][lines-2]);
+                if (maze[i][lines-2]) {
+                    System.out.println(i);
+                    possibleExit.add(i);
+                }
+            }
+            int indexExit = (int) (Math.random()*possibleExit.size());
+            exit = possibleExit.get(indexExit);
+        }
+
+        maze[lines-1][exit] = true;
+    }
+
+    @Override
     public void print(boolean[][] maze)  {
-        for (int i=0; i<lines; i++) {
+        for (int i=0; i<columns; i++) {
             System.out.println();
-            for (int j=0; j<columns; j++) {
+            for (int j=0; j<lines; j++) {
                 if (maze[i][j]) {
                     System.out.print(".");
                 } else {
