@@ -111,24 +111,42 @@ public class SimpleImperfectMazeGenerator implements MazeGenerator {
     }
 
     public void destroyWall(boolean[][] imperfectMaze) {
-        int interiorWalls = 2*(columns*lines/3 -columns-lines+3);
-        // This expression is the number of interior walls in a perfect square maze
+        // In a maze, there are some interior walls that can't be destroyed. (in the optic to not create a path with 2 cells width)
+        // So we put these unbreakable walls in an ArrayList
+        ArrayList<Pair<Integer, Integer>> fixedInteriorWalls = new ArrayList<>();
+        for (int i=2; i<columns-2; i+=3) {
+            for (int j=2; j<lines-2; j+=3) {
+                fixedInteriorWalls.add(new Pair<>(i, j));
+                fixedInteriorWalls.add(new Pair<>(i+1, j));
+                fixedInteriorWalls.add(new Pair<>(i, j+1));
+                fixedInteriorWalls.add(new Pair<>(i+1, j+1));
+            }
+        }
 
-        // To create an imperfect maze, we will destroy thirty percent of interior walls of the perfect maze.
+        int interiorWalls = 2*(columns*lines/3 -columns-lines+3);
         int numberOfWallToDestroy = 30 *interiorWalls / 100;
+        // This expression is the number of interior walls in a perfect square maze
+        // To create an imperfect maze, we will destroy thirty percent of interior walls of the perfect maze.
 
         while (numberOfWallToDestroy !=0) {
             // Exterior walls can't be destroyed, so we fixed limits
             int potentialX = (int)(1 + (Math.random() * (columns-2 - 1)));
             int potentialY = (int)(1 + (Math.random() * (lines -2 -1)));
+            boolean validCell = true;
 
-            if (!imperfectMaze[potentialX][potentialY]) {
+            for (Pair<Integer, Integer> fixedInteriorWall : fixedInteriorWalls) {
+                if (potentialX == fixedInteriorWall.getFirst() && potentialY == fixedInteriorWall.getSecond()) {
+                    validCell = false;
+                    break;
+                }
+            }
+
+            if (!imperfectMaze[potentialX][potentialY] && validCell) {
                 // This works only if the cell was a wall, otherwise we come back to the beginning of the loop
                 imperfectMaze[potentialX][potentialY] = true;
                 numberOfWallToDestroy--;
             }
         }
-
     }
 
     @Override
