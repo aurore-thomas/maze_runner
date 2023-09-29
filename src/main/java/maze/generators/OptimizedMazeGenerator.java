@@ -14,6 +14,15 @@ public class OptimizedMazeGenerator implements MazeGenerator {
     ArrayList<Pair<Integer, Integer>> visitedCells = new ArrayList<>();
     ArrayList<Pair<Integer, Integer>> visitedIntersection = new ArrayList<>();
 
+    public OptimizedMazeGenerator(int inputColumns, int inputLines, String status) {
+        initializeMaze(inputColumns, inputLines);
+        generateCenterMaze(1, 1);
+        if (Objects.equals(status, "imperfect")) {
+            destroyWall();
+        }
+        print(mazeBoolean);
+    }
+
     // Chronometer :
     private long begin;
 
@@ -129,13 +138,13 @@ public class OptimizedMazeGenerator implements MazeGenerator {
     }
 
     // In the case of imperfect graph maze :
-    public void destroyWall(boolean[][] imperfectMaze) {
+    public void destroyWall() {
         // To create an imperfect maze, we only need to create a loop in the maze, so to break two walls
         externLoop:
         for (int i=2; i<columns-1; i+=3) {
             for (int j=1; j<lines-2; j+=3) {
-                if (!imperfectMaze[i][j]) {
-                    imperfectMaze[i][j] = imperfectMaze[i+1][j] = true;
+                if (!mazeBoolean[i][j]) {
+                    mazeBoolean[i][j] = mazeBoolean[i+1][j] = true;
                     break externLoop;
                 }
             }
