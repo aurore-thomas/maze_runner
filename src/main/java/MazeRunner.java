@@ -12,12 +12,12 @@ public class MazeRunner {
             width = Integer.parseInt(args[0]);
             height = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
-            System.out.print("Erreur : Veuillez fournir une largeur et une hauteur valides supérieurs à 5");
+            System.out.println("Erreur : Veuillez fournir une largeur et une hauteur valides supérieurs à 5");
             return false;
         }
 
         if (width<5 || height<5) {
-            System.out.print("Erreur : Veuillez fournir une largeur et une hauteur valides supérieurs à 5");
+            System.out.println("Erreur : Veuillez fournir une largeur et une hauteur valides supérieurs à 5");
             return false;
         }
         return true;
@@ -43,7 +43,6 @@ public class MazeRunner {
             System.out.println("Erreur : Veuillez fournir un type de labyrinthe et une méthode de génération valides.");
             printManual();
         } else {
-            System.out.println("Entrée main");
             Maze newMaze = new Maze(width, height, status, type);
             newMaze.choiceType();
         }
