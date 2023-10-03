@@ -13,7 +13,7 @@ public class SimpleImperfectMazeGenerator implements MazeGenerator {
     public SimpleImperfectMazeGenerator(int inputColumns, int inputLines) {
         initializeMaze(inputColumns, inputLines);
         generateCenterMaze(1, 1);
-        print(mazeBoolean);
+//        print(mazeBoolean);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class SimpleImperfectMazeGenerator implements MazeGenerator {
         columns = inputColumns * 3;
         mazeBoolean = new boolean[columns][lines]; // We create a 2D list boolean to represent the maze
 
-        // We fill the maze with "False" value
+        // We fill the maze with "True" value
         for (int i=0; i<columns; i++) {
             for (int j=0; j<lines; j++) {
                 mazeBoolean[i][j] = true;
@@ -46,9 +46,9 @@ public class SimpleImperfectMazeGenerator implements MazeGenerator {
             }
         }
 
-        int interiorWalls = 2*(columns*lines/3 -columns-lines+3);
+        int interiorWallsToCreate = (2*(columns*lines/3 -columns-lines+3)) - fixedInteriorWalls.size();
 
-        while (interiorWalls !=0) {
+        while (interiorWallsToCreate !=0) {
             // Exterior walls can't be destroyed, so we fixed limits
             int potentialX = (int) (1 + (Math.random() * (columns - 2 - 1)));
             int potentialY = (int) (1 + (Math.random() * (lines - 2 - 1)));
@@ -64,7 +64,7 @@ public class SimpleImperfectMazeGenerator implements MazeGenerator {
             if (mazeBoolean[potentialX][potentialY] && validCell) {
                 // This works only if the cell was a wall, otherwise we come back to the beginning of the loop
                 mazeBoolean[potentialX][potentialY] = false;
-                interiorWalls--;
+                interiorWallsToCreate--;
             }
         }
        return mazeBoolean;
@@ -83,5 +83,4 @@ public class SimpleImperfectMazeGenerator implements MazeGenerator {
             }
         }
     }
-
 }

@@ -14,6 +14,12 @@ public class SimplePerfectMazeGenerator implements MazeGenerator {
     ArrayList<Pair<Integer, Integer>> visitedCells = new ArrayList<>();
     ArrayList<Pair<Integer, Integer>> visitedIntersection = new ArrayList<>();
 
+    public SimplePerfectMazeGenerator(int inputColumns, int inputLines) {
+        initializeMaze(inputColumns, inputLines);
+        generateCenterMaze(1, 1);
+//        print(mazeBoolean);
+    }
+
 
     @Override
     public void initializeMaze(int inputColumns, int inputLines) {

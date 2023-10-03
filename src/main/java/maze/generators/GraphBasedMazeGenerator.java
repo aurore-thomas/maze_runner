@@ -20,7 +20,7 @@ public class GraphBasedMazeGenerator implements MazeGenerator {
         if (Objects.equals(status, "imperfect")) {
             destroyWall();
         }
-        print(mazeBoolean);
+//        print(mazeBoolean);
     }
 
 
