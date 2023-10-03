@@ -18,24 +18,15 @@ public class Maze {
         Maze.height = height;
         Maze.status = status;
         Maze.type = type;
-//        System.out.println(type + " type");
-//        System.out.println(status + " stat");
-//        System.out.println(width + " x");
-//        System.out.println(height + " y");
     }
 
     public void choiceType() {
-
         try {
-            System.out.println("Entrée try maze");
             switch (type) {
                 case "simple":
-                    System.out.println("Simple choice");
                     if (Objects.equals(status, "perfect")) {
-                        System.out.println("Perfect choice");
                         new SimplePerfectMazeGenerator(width, height);
                     } else if (Objects.equals(status, "imperfect")){
-                        System.out.println("Imperfect choice");
                         new SimpleImperfectMazeGenerator(width, height);
                     }
                 case "graph":
@@ -45,8 +36,7 @@ public class Maze {
             }
         } catch (Exception e) {
             System.out.println("Erreur inattendue lors de la génération du labyrinthe. Veuillez réessayer.");
-            System.out.println("Pour lancer un labyrinthe, merci d'entrer : ");
-            System.out.println("java -jar MazeRunner.jar [largeur] [hauteur] [perfect/imperfect] [simple/graph/optimized]");
+            System.out.println("Utilisation : java -jar MazeRunner.jar [largeur] [hauteur] [perfect/imperfect] [simple/graph/optimized]");
         }
     }
 
