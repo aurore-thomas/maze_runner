@@ -26,18 +26,22 @@ public class Maze {
                 case "simple":
                     if (Objects.equals(status, "perfect")) {
                         new SimplePerfectMazeGenerator(width, height);
+                        break;
                     } else if (Objects.equals(status, "imperfect")){
                         new SimpleImperfectMazeGenerator(width, height);
+                        break;
                     }
                 case "graph":
                     new GraphBasedMazeGenerator(width, height, status);
+                    break;
                 case "optimized":
                     new OptimizedMazeGenerator(width, height, status);
+                    break;
             }
         } catch (Exception e) {
             System.out.println("Erreur inattendue lors de la génération du labyrinthe. Veuillez réessayer.");
-            System.out.println("Utilisation : java -jar MazeRunner.jar [largeur] [hauteur] [perfect/imperfect] [simple/graph/optimized]");
+            System.out.println("Utilisation :");
+            System.out.println("java -jar MazeRunner.jar [largeur] [hauteur] [perfect/imperfect] [simple/graph/optimized]");
         }
     }
-
 }
