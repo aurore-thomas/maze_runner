@@ -19,6 +19,7 @@ test {
 
 jar {
     archiveBaseName = 'MazeRunner'
+    destinationDirectory = file("$rootDir/")
     manifest {
         attributes "Main-Class" : "MazeRunner"
     }
