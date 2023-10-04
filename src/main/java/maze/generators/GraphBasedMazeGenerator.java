@@ -20,7 +20,7 @@ public class GraphBasedMazeGenerator implements MazeGenerator {
         if (Objects.equals(status, "imperfect")) {
             destroyWall();
         }
-//        print(mazeBoolean);
+        print(mazeBoolean);
     }
 
 
@@ -149,9 +149,9 @@ public class GraphBasedMazeGenerator implements MazeGenerator {
         }
 
         int interiorWalls = 2*(columns*lines/3 -columns-lines+3);
-        int numberOfWallToDestroy = 30 *interiorWalls / 100;
+        int numberOfWallToDestroy = 10 *interiorWalls / 100;
         // This expression is the number of interior walls in a perfect square maze
-        // To create an imperfect maze, we will destroy thirty percent of interior walls of the perfect maze.
+        // To create an imperfect maze, we will destroy ten percent of interior walls of the perfect maze.
 
         while (numberOfWallToDestroy !=0) {
             // Exterior walls can't be destroyed, so we fixed limits
