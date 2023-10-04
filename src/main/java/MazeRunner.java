@@ -33,7 +33,8 @@ public class MazeRunner {
     }
 
     public static void printManual() {
-        System.out.println("Utilisation : java -jar MazeRunner.jar [largeur] [hauteur] [perfect/imperfect] [simple/graph/optimized]");
+        System.out.println("Utilisation :");
+        System.out.println("java -jar MazeRunner.jar [largeur] [hauteur] [perfect/imperfect] [simple/graph/optimized]");
     }
 
     public static void main(String[] args) {
