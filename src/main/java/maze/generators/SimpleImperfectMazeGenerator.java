@@ -13,7 +13,7 @@ public class SimpleImperfectMazeGenerator implements MazeGenerator {
     public SimpleImperfectMazeGenerator(int inputColumns, int inputLines) {
         initializeMaze(inputColumns, inputLines);
         generateCenterMaze(1, 1);
-//        print(mazeBoolean);
+        print(mazeBoolean);
     }
 
     @Override
@@ -27,6 +27,17 @@ public class SimpleImperfectMazeGenerator implements MazeGenerator {
             for (int j=0; j<lines; j++) {
                 mazeBoolean[i][j] = true;
             }
+        }
+
+        // Exterior walls (two loops in the case the maze isn't a square)
+        for (int i=0; i<columns; i++) {
+            mazeBoolean[0][i] = false;
+            mazeBoolean[lines-1][i] = false;
+        }
+
+        for (int i=0; i<lines; i++) {
+            mazeBoolean[i][0] = false;
+            mazeBoolean[i][columns-1] = false;
         }
 
         // We set the entry and the exit of the maze, which are always the same
@@ -43,6 +54,10 @@ public class SimpleImperfectMazeGenerator implements MazeGenerator {
                 fixedInteriorWalls.add(new Pair<>(i+1, j));
                 fixedInteriorWalls.add(new Pair<>(i, j+1));
                 fixedInteriorWalls.add(new Pair<>(i+1, j+1));
+                mazeBoolean[i][j] = false;
+                mazeBoolean[i+1][j] = false;
+                mazeBoolean[i][j+1] = false;
+                mazeBoolean[i+1][j+1] = false;
             }
         }
 
